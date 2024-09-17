@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { iEmployeeFull } from '../interfaces/iEmployeeFull';
+import { iEmployee } from '../interfaces/iEmployee';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -13,6 +14,25 @@ export class EmployeeService {
   private apiUrl = 'https://localhost:7261/api'; 
 
   constructor(private http: HttpClient) { }
+
+  CreateEmployee(employee: iEmployee): Observable<any> {         
+    console.log(employee);
+    return this.http.post(`${this.apiUrl}/Employees/CreateEmployee`, employee).pipe(
+      catchError(error => {
+          console.error('Request error:', error);
+          return throwError(error);
+      })    
+    );    
+  }
+
+  DeleteEmployee(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/Employees/DeleteEmployee/${id}`).pipe(
+      catchError(error => {
+        console.error('Error deleting the employee:', error);
+        return throwError(error);
+      })
+    );
+  }
 
   GetEmployees(): Observable<any> {         
     return this.http.get(`${this.apiUrl}/Employees/GetEmployees`).pipe(

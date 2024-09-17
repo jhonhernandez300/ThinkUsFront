@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { iEmployeeFull } from '../../interfaces/iEmployeeFull';
 import { EmployeeService } from '../../services/employee.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
 
 @Component({
   selector: 'app-employee-get-all',
@@ -11,10 +14,12 @@ export class EmployeeGetAllComponent implements OnInit {
   employees: iEmployeeFull[] = [];
   errorMessage: string = '';  
   showDiv = false;  
-  displayedColumns: string[] = ['employeeName', 'Position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleId', 'delete', 'update'];
+  userChoice = false;
+  displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleId', 'delete', 'update'];
 
   constructor(
-    private employeeService: EmployeeService    
+    private employeeService: EmployeeService,
+    public dialog: MatDialog 
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +63,39 @@ export class EmployeeGetAllComponent implements OnInit {
   }
 
   delete(id: number){
-    
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.userChoice = result;  
+      if(this.userChoice == true){
+        this.deleteEmployee(id);
+      }
+    });
+  }
+
+  deleteEmployee(id: number): void{
+    this.employeeService.DeleteEmployee(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        if (response.message === "Employee not found with that id") {
+          this.dialog.open(CloseDialogComponent, {
+             // Pasar el mensaje al diálogo
+            data: { message: response.message } 
+          });
+        } else {          
+          this.dialog.open(CloseDialogComponent, {            
+           data: { message: "Employee deleted" } 
+         });
+         this.updateEmployees(id);
+        }
+      },
+      (error: any) => {
+        this.handleError(error);
+      }
+    );
+  }
+
+  private updateEmployees(id: number): void {
+    this.employees = this.employees.filter(employee => employee.id !== id);
   }
 }
