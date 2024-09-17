@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
-import { iEmployee } from '../../interfaces/iEmployee';
+import { iEmployeeFull } from '../../interfaces/iEmployeeFull';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
@@ -51,6 +51,7 @@ onRoleChange(event: any): void {
 
   private initializeForm(): void {
     this.myForm = this.formBuilder.group({                                
+      Id: [0],
       EmployeeName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       Email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/), Validators.minLength(5), Validators.maxLength(30)]],
@@ -73,7 +74,7 @@ onRoleChange(event: any): void {
 
   public async onSubmit(): Promise<void> {
     this.submitted = true;
-    console.log("Form value ", this.myForm.value);        
+    //console.log("Form value ", this.myForm.value);        
 
     if (this.myForm.invalid) {
       console.log('Error de validación')          
@@ -99,7 +100,7 @@ onRoleChange(event: any): void {
     const tieneNumero = /\d/.test(contrasena);
 
     const esValido = tieneMayuscula && tieneMinuscula && tieneNumero;
-    console.log("Contraseña esValido ", esValido);
+    //console.log("Contraseña esValido ", esValido);
     return esValido ? null : { 'contrasenaInvalida': true };
   }
 

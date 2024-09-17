@@ -4,6 +4,8 @@ import { EmployeeService } from '../../services/employee.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
+import { EmployeeDataTransferService } from '../../services/employee-data-transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-get-all',
@@ -18,8 +20,10 @@ export class EmployeeGetAllComponent implements OnInit {
   displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleId', 'delete', 'update'];
 
   constructor(
+    private router: Router,
     private employeeService: EmployeeService,
-    public dialog: MatDialog 
+    public dialog: MatDialog,
+    public employeeDataTransferService: EmployeeDataTransferService
   ) {}
 
   ngOnInit(): void {
@@ -29,10 +33,10 @@ export class EmployeeGetAllComponent implements OnInit {
   private loadAllEmployees(): void {
     this.employeeService.GetEmployees().subscribe(
       (response: any) => {
-        console.log(response);
+        //console.log(response);
         if (response.message === "There are no employees at the moment") {
           this.handleEmpty(response.message);
-        } else {          
+        } else {                    
           this.employees = response;
         }
       },
@@ -58,8 +62,10 @@ export class EmployeeGetAllComponent implements OnInit {
     this.showTemporaryDiv();
   }
 
-  update(id: number){
-
+  update(employee: iEmployeeFull) {
+    console.log("En el get-all ", employee);
+    this.employeeDataTransferService.changeEmployee(employee);
+    this.router.navigate(['/employee-update']);    
   }
 
   delete(id: number){

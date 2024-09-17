@@ -38,7 +38,7 @@
 
           <ng-container matColumnDef="roleId">
             <th mat-header-cell *matHeaderCellDef> Role Id </th>
-            <td mat-cell *matCellDef="let employee"> {{ employee.roleId }} </td>
+            <td mat-cell *matCellDef="let employee"> {{ employee.rolId }} </td>
           </ng-container>  
           
           <ng-container matColumnDef="delete">
@@ -51,7 +51,7 @@
           <ng-container matColumnDef="update">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let employee">
-              <button mat-raised-button color="primary" (click)="update(employee.id)">Update</button>
+              <button mat-raised-button color="primary" (click)="update(employee)">Update</button>
             </td>
           </ng-container>  
           

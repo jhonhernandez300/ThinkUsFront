@@ -18,6 +18,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { CloseDialogComponent } from './components/close-dialog/close-dialog.component';
 import { EmployeeSaveComponent } from './components/employee-save/employee-save.component';
+import { EmployeeUpdateComponent } from './components/employee-update/employee-update.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { EmployeeSaveComponent } from './components/employee-save/employee-save.
     EmployeeGetAllComponent,
     ConfirmDialogComponent,
     CloseDialogComponent,
-    EmployeeSaveComponent
+    EmployeeSaveComponent,
+    EmployeeUpdateComponent
   ],
   imports: [
     BrowserModule,

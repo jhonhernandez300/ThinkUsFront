@@ -15,7 +15,17 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  CreateEmployee(employee: iEmployee): Observable<any> {         
+  UpdateEmployee(employee: iEmployee): Observable<any> {    
+    console.log("En el servicio ", employee);     
+    return this.http.put(`${this.apiUrl}/Turno/ActualizarTurno`, employee).pipe(
+      catchError(error => {
+          console.error('Request error:', error);
+          return throwError(error);
+      })    
+    );    
+  }
+
+  CreateEmployee(employee: iEmployeeFull): Observable<any> {         
     console.log(employee);
     return this.http.post(`${this.apiUrl}/Employees/CreateEmployee`, employee).pipe(
       catchError(error => {
