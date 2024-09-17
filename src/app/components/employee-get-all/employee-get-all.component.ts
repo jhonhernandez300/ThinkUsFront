@@ -63,7 +63,7 @@ export class EmployeeGetAllComponent implements OnInit {
   }
 
   update(employee: iEmployeeFull) {
-    console.log("En el get-all ", employee);
+    //console.log("En el get-all ", employee);
     this.employeeDataTransferService.changeEmployee(employee);
     this.router.navigate(['/employee-update']);    
   }

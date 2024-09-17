@@ -12,7 +12,7 @@ export class EmployeeDataTransferService {
   constructor() { }
 
   changeEmployee(employee: iEmployeeFull) {
-    console.log("En el transfer service ", employee);
+    //console.log("En el transfer service ", employee);
     this.employeeSource.next(employee);
   }
 }
