@@ -53,6 +53,11 @@ export class EmployeeService {
     );    
   }
 
+  exportEmployeesToCsv() {
+    // Llama al endpoint y especifica que la respuesta es un blob (archivo binario)
+    return this.http.get(`${this.apiUrl}/Employees/ExportEmployeesToCsv`, { responseType: 'blob' });
+  }
+
   IsAuthenticated(): boolean{  
     const lastDate = localStorage.getItem('last date');      
     //console.log("lastDate ", lastDate);

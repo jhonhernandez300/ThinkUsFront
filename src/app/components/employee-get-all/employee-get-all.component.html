@@ -2,6 +2,9 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title class="text-center">Employees</mat-card-title>
+        <button mat-raised-button class="header-button" (click)="downloadCsv()">
+          Download CSV file
+        </button>
       </mat-card-header>
       <mat-card-content>
         <table mat-table [dataSource]="employees" class="mat-elevation-z8">  

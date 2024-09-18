@@ -104,4 +104,20 @@ export class EmployeeGetAllComponent implements OnInit {
   private updateEmployees(id: number): void {
     this.employees = this.employees.filter(employee => employee.id !== id);
   }
+
+  downloadCsv() {
+    this.employeeService.exportEmployeesToCsv().subscribe((response: Blob) => {
+      // Crea un enlace temporal para descargar el archivo
+      const blob = new Blob([response], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'employees.csv';  
+      a.click();
+      // Limpia la URL una vez descargada
+      window.URL.revokeObjectURL(url);  
+    }, error => {
+      console.error('Error al descargar el archivo CSV:', error);
+    });
+  }
 }
