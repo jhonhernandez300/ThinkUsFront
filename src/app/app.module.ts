@@ -15,6 +15,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
+    MatPaginator,
     MatInputModule,
     BrowserAnimationsModule,
     MatMenuModule,

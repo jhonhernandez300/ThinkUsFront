@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { iEmployeeRole } from '../../interfaces/iEmployeeRole';
 import { EmployeeService } from '../../services/employee.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +8,8 @@ import { EmployeeDataTransferService } from '../../services/employee-data-transf
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageChangeService } from '../../services/language-change.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee-get-all',
@@ -15,11 +17,13 @@ import { LanguageChangeService } from '../../services/language-change.service';
   styleUrl: './employee-get-all.component.css'
 })
 export class EmployeeGetAllComponent implements OnInit {
-  employees: iEmployeeRole[] = [];
+  dataSource = new MatTableDataSource<iEmployeeRole>([]); // Usamos MatTableDataSource para la paginación
   errorMessage: string = '';  
   showDiv = false;  
   userChoice = false;
   displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleName', 'delete', 'update'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Referencia al paginador
 
   constructor(
     private router: Router,
@@ -28,8 +32,7 @@ export class EmployeeGetAllComponent implements OnInit {
     private languageChangeService: LanguageChangeService,
     public dialog: MatDialog,
     public employeeDataTransferService: EmployeeDataTransferService
-  ) {    
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loadAllEmployees();
@@ -38,17 +41,75 @@ export class EmployeeGetAllComponent implements OnInit {
   private loadAllEmployees(): void {
     this.employeeService.GetEmployees().subscribe(
       (response: any) => {
-        console.log(response);
         if (response.message === "There are no employees at the moment") {
           this.handleEmpty(response.message);
         } else {                    
-          this.employees = response.employees;
+          this.dataSource.data = response.employees; // Actualiza la tabla con los datos recibidos
+          this.dataSource.paginator = this.paginator; // Conecta el paginador
         }
       },
       (error: any) => {
         this.handleError(error);
       }
     );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  update(employee: iEmployeeRole) {
+    this.employeeDataTransferService.changeEmployee(employee);
+    this.router.navigate(['/employee-update']);    
+  }
+
+  delete(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.userChoice = result;  
+      if (this.userChoice) {
+        this.deleteEmployee(id);
+      }
+    });
+  }
+
+  deleteEmployee(id: number): void {
+    this.employeeService.DeleteEmployee(id).subscribe(
+      (response: any) => {
+        if (response.message === "Employee not found with that id") {
+          this.dialog.open(CloseDialogComponent, {
+            data: { message: response.message } 
+          });
+        } else {          
+          this.dialog.open(CloseDialogComponent, {            
+            data: { message: "Employee deleted" } 
+          });
+          this.updateEmployees(id);
+        }
+      },
+      (error: any) => {
+        this.handleError(error);
+      }
+    );
+  }
+
+  private updateEmployees(id: number): void {
+    this.dataSource.data = this.dataSource.data.filter(employee => employee.id !== id);
+  }
+
+  downloadCsv() {
+    this.employeeService.exportEmployeesToCsv().subscribe((response: Blob) => {
+      const blob = new Blob([response], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'employees.csv';  
+      a.click();
+      window.URL.revokeObjectURL(url);  
+    }, error => {
+      console.error('Error al descargar el archivo CSV:', error);
+    });
   }
 
   private handleEmpty(message: string): void {
@@ -65,64 +126,5 @@ export class EmployeeGetAllComponent implements OnInit {
     console.error('Error:', error);
     this.errorMessage = error;
     this.showTemporaryDiv();
-  }
-
-  update(employee: iEmployeeRole) {
-    //console.log("En el get-all ", employee);
-    this.employeeDataTransferService.changeEmployee(employee);
-    this.router.navigate(['/employee-update']);    
-  }
-
-  delete(id: number){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.userChoice = result;  
-      if(this.userChoice == true){
-        this.deleteEmployee(id);
-      }
-    });
-  }
-
-  deleteEmployee(id: number): void{
-    this.employeeService.DeleteEmployee(id).subscribe(
-      (response: any) => {
-        //console.log(response);
-        if (response.message === "Employee not found with that id") {
-          this.dialog.open(CloseDialogComponent, {
-             // Pasar el mensaje al diálogo
-            data: { message: response.message } 
-          });
-        } else {          
-          this.dialog.open(CloseDialogComponent, {            
-           data: { message: "Employee deleted" } 
-         });
-         this.updateEmployees(id);
-        }
-      },
-      (error: any) => {
-        this.handleError(error);
-      }
-    );
-  }
-
-  private updateEmployees(id: number): void {
-    this.employees = this.employees.filter(employee => employee.id !== id);
-  }
-
-  downloadCsv() {
-    this.employeeService.exportEmployeesToCsv().subscribe((response: Blob) => {
-      // Crea un enlace temporal para descargar el archivo
-      const blob = new Blob([response], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'employees.csv';  
-      a.click();
-      // Limpia la URL una vez descargada
-      window.URL.revokeObjectURL(url);  
-    }, error => {
-      console.error('Error al descargar el archivo CSV:', error);
-    });
   }
 }
