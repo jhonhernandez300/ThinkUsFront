@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { iEmployeeFull } from '../../interfaces/iEmployeeFull';
+import { iEmployeeRole } from '../../interfaces/iEmployeeRole';
 import { EmployeeService } from '../../services/employee.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -13,11 +13,11 @@ import { Router } from '@angular/router';
   styleUrl: './employee-get-all.component.css'
 })
 export class EmployeeGetAllComponent implements OnInit {
-  employees: iEmployeeFull[] = [];
+  employees: iEmployeeRole[] = [];
   errorMessage: string = '';  
   showDiv = false;  
   userChoice = false;
-  displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleId', 'delete', 'update'];
+  displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleName', 'delete', 'update'];
 
   constructor(
     private router: Router,
@@ -33,11 +33,11 @@ export class EmployeeGetAllComponent implements OnInit {
   private loadAllEmployees(): void {
     this.employeeService.GetEmployees().subscribe(
       (response: any) => {
-        //console.log(response);
+        console.log(response);
         if (response.message === "There are no employees at the moment") {
           this.handleEmpty(response.message);
         } else {                    
-          this.employees = response;
+          this.employees = response.employees;
         }
       },
       (error: any) => {
@@ -62,7 +62,7 @@ export class EmployeeGetAllComponent implements OnInit {
     this.showTemporaryDiv();
   }
 
-  update(employee: iEmployeeFull) {
+  update(employee: iEmployeeRole) {
     //console.log("En el get-all ", employee);
     this.employeeDataTransferService.changeEmployee(employee);
     this.router.navigate(['/employee-update']);    
@@ -82,7 +82,7 @@ export class EmployeeGetAllComponent implements OnInit {
   deleteEmployee(id: number): void{
     this.employeeService.DeleteEmployee(id).subscribe(
       (response: any) => {
-        console.log(response);
+        //console.log(response);
         if (response.message === "Employee not found with that id") {
           this.dialog.open(CloseDialogComponent, {
              // Pasar el mensaje al diálogo

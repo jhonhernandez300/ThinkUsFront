@@ -36,9 +36,9 @@ export class EmployeeUpdateComponent implements OnInit {
       
       if(employee != null){
         this.employee = employee;
-        console.log("En update ", this.employee);
+        //console.log("En update ", this.employee);
         this.myForm.patchValue(employee);
-        console.log(this.myForm.value);
+        //console.log(this.myForm.value);
         this.selectedRoleId = employee.roleId; 
       }      
     });
@@ -53,7 +53,7 @@ export class EmployeeUpdateComponent implements OnInit {
         // Una vez obtenidos los roles, establecemos el valor por defecto del dropdown
         if (this.employee) {
           // actualizamos el valor del campo RolId con el rol del empleado
-          this.myForm.patchValue({ RolId: this.selectedRoleId });  
+          this.myForm.patchValue({ rolId: this.selectedRoleId });  
         }
       },
       error: (error: any) => {
@@ -103,7 +103,7 @@ export class EmployeeUpdateComponent implements OnInit {
     
     this.employeeService.UpdateEmployee(this.myForm.value).subscribe({
       next: (response: any) => {
-          console.log('response', response);
+          //console.log('response', response);
           // Maneja la respuesta exitosa aquí
       },
       error: (error: any) => {

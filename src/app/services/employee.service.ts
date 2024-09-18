@@ -45,7 +45,7 @@ export class EmployeeService {
   }
 
   GetEmployees(): Observable<any> {         
-    return this.http.get(`${this.apiUrl}/Employees/GetEmployees`).pipe(
+    return this.http.get(`${this.apiUrl}/Employees/GetAllEmployees`).pipe(
       catchError(error => {
           console.error('Error en la solicitud:', error);
           return throwError(error);
