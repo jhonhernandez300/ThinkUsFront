@@ -24,6 +24,7 @@ import { CloseDialogComponent } from './components/close-dialog/close-dialog.com
 import { EmployeeSaveComponent } from './components/employee-save/employee-save.component';
 import { EmployeeUpdateComponent } from './components/employee-update/employee-update.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptorService } from '../app/services/auth-interceptor.service';
 
 // Función que cargará los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -66,7 +67,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
