@@ -1,5 +1,7 @@
-<mat-card>
-    <div>
+<div class="global-container">
+  <div class="row-container">
+    <mat-card class="language right">
+      <div>
         <mat-form-field appearance="fill">
           <mat-label>Idioma</mat-label>
           <mat-select (selectionChange)="setLanguage($event)">
@@ -8,16 +10,19 @@
           </mat-select>
         </mat-form-field>
       </div>
-  </mat-card>
+    </mat-card>
 
-  <mat-card>
-    <div>
-      <app-menu></app-menu>
-    </div>
-  </mat-card> 
-  
-  <mat-card class="spaced-card">
+    <mat-card class="menu left">
+      <div>
+        <app-menu></app-menu>
+      </div>
+    </mat-card>
+  </div>
+
+  <mat-card class="content">
     <div>
       <router-outlet></router-outlet>
     </div>
   </mat-card>
+</div>
+
