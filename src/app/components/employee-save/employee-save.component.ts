@@ -38,7 +38,9 @@ export class EmployeeSaveComponent implements OnInit{
       },
       error: (error: any) => {
           console.error('Request error:', error);
-          // Maneja el error aquí
+          this.dialog.open(CloseDialogComponent, {            
+            data: { message: error } 
+          });
       }
   });
 }
@@ -77,18 +79,25 @@ onRoleChange(event: any): void {
     //console.log("Form value ", this.myForm.value);        
 
     if (this.myForm.invalid) {
-      console.log('Error de validación')          
+      //console.log('Error de validación')          
+      this.dialog.open(CloseDialogComponent, {            
+        data: { message: "Form validation error" } 
+      });
       return
     }             
     
     this.employeeService.CreateEmployee(this.myForm.value).subscribe({
       next: (response: any) => {
-          console.log('response', response);
-          // Maneja la respuesta exitosa aquí
+          //console.log('response', response);
+          this.dialog.open(CloseDialogComponent, {            
+            data: { message: "Employee created" } 
+          });
       },
       error: (error: any) => {
-          console.error('Request error:', error);
-          // Maneja el error aquí
+          //console.error('Request error:', error);
+          this.dialog.open(CloseDialogComponent, {            
+            data: { message: error } 
+          });
       }
   });     
   }

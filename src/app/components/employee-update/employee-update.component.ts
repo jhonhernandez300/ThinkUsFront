@@ -57,8 +57,11 @@ export class EmployeeUpdateComponent implements OnInit {
         }
       },
       error: (error: any) => {
-          console.error('Request error:', error);
-          // Maneja el error aquí
+          //console.error('Request error:', error);
+          this.dialog.open(CloseDialogComponent, {
+            // Pasar el mensaje al diálogo
+           data: { message: error } 
+         });
       }
     });
   }
@@ -97,18 +100,27 @@ export class EmployeeUpdateComponent implements OnInit {
     //console.log("Form value ", this.myForm.value);        
 
     if (this.myForm.invalid) {
-      console.log('Error de validación')          
+      //console.log('Error de validación')          
+      this.dialog.open(CloseDialogComponent, {
+        // Pasar el mensaje al diálogo
+       data: { message: "Form validation error" } 
+     });
       return
     }             
     
     this.employeeService.UpdateEmployee(this.myForm.value).subscribe({
       next: (response: any) => {
           //console.log('response', response);
-          // Maneja la respuesta exitosa aquí
+          this.dialog.open(CloseDialogComponent, {
+            // Pasar el mensaje al diálogo
+           data: { message: "Employee updated" } 
+         });
       },
       error: (error: any) => {
-          console.error('Request error:', error);
-          // Maneja el error aquí
+          //console.error('Request error:', error);
+          this.dialog.open(CloseDialogComponent, {            
+           data: { message: error } 
+         });
       }
     });     
   }

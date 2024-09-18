@@ -1,0 +1,6 @@
+<button mat-button [matMenuTriggerFor]="menu">Menú</button>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/employees-get-all']">{{ 'SEE ALL EMPLOYEES' | translate }}</button>
+    <button mat-menu-item [routerLink]="['/employee-save']">{{ 'NEW EMPLOYEE' | translate }}</button>    
+</mat-menu>

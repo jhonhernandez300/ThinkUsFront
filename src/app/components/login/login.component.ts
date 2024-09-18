@@ -8,6 +8,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,8 @@ export class LoginComponent {
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder,        
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public dialog: MatDialog
     ){      
   }
 
@@ -77,9 +80,16 @@ export class LoginComponent {
           this.router.navigate(['/employees-get-all']);
         },
         (error: any) => {
-          console.error('Error:', error);
+          //console.error('Error:', error);
+          this.dialog.open(CloseDialogComponent, {            
+            data: { message: error } 
+          });
         }
       );
+    }else{
+      this.dialog.open(CloseDialogComponent, {            
+        data: { message: "Form validation error" } 
+      });
     }
   }
 

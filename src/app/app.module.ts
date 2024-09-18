@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { EmployeeSaveComponent } from './components/employee-save/employee-save.
 import { EmployeeUpdateComponent } from './components/employee-update/employee-update.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptorService } from '../app/services/auth-interceptor.service';
+import { MenuComponent } from './components/menu/menu.component';
 
 // Función que cargará los archivos de traducción
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,7 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CloseDialogComponent,
     EmployeeSaveComponent,
     EmployeeUpdateComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     MatInputModule,
     BrowserAnimationsModule,
+    MatMenuModule,
     MatSelectModule,
     MatRadioModule,
     MatIconModule,
