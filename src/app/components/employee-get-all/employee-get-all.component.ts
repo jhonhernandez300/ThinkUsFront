@@ -6,6 +6,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
 import { EmployeeDataTransferService } from '../../services/employee-data-transfer.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageChangeService } from '../../services/language-change.service';
 
 @Component({
   selector: 'app-employee-get-all',
@@ -21,10 +23,13 @@ export class EmployeeGetAllComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private translate: TranslateService,
     private employeeService: EmployeeService,
+    private languageChangeService: LanguageChangeService,
     public dialog: MatDialog,
     public employeeDataTransferService: EmployeeDataTransferService
-  ) {}
+  ) {    
+  }
 
   ngOnInit(): void {
     this.loadAllEmployees();

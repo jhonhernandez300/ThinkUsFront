@@ -1,0 +1,23 @@
+{
+ "EMPLOYEES": "Empleados",
+ "DOWNLOAD CSV FILE": "Descargar archivo csv",
+ "NAME": "Nombre",
+ "POSITION": "Posición",
+ "DESCRIPTION": "Descripción",
+ "STATE": "Estado",
+ "EMAIL": "Correo",
+ "PASSWORD": "Clave",
+ "ROLE NAME": "Nombre del Rol",
+ "DELETE": "Borrar",
+ "UPDATE": "Actualizar",
+ "SAVE EMPLOYEE": "Guardar Empleado",
+ "REQUIRED": "Requerido",
+ "AT LEAST 3 CHARACTERS": "Al menos 3 caracteres",
+ "CLEAN": "Limpiar",
+ "SAVE": "Guardar",
+ "UPDATE EMPLOYEE": "Actualizar Empleado",
+ "AT LEAST 8 CHARACTERS": "Al menos 8 caracteres",
+ "ACTIVATED": "Activado",
+ "DEACTIVATED": "Desactivado",
+"LOGIN": "Loguearse"
+}

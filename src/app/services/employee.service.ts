@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { iEmployeeFull } from '../interfaces/iEmployeeFull';
 import { iEmployee } from '../interfaces/iEmployee';
 import { catchError } from 'rxjs/operators';
+import { iLogin } from '../../app/interfaces/iLogin';
 
 @Injectable({
   providedIn: 'root'
@@ -82,12 +83,13 @@ export class EmployeeService {
     }   
   }
 
-  // Login(usuarioCorto: iUsuarioCorto): Observable<any> {         
-  //   return this.http.post(`${this.apiUrl}/Usuario/Login`, usuarioCorto).pipe(
-  //     catchError(error => {
-  //         console.error('Error en la solicitud:', error);
-  //         return throwError(error);
-  //     })    
-  //   );    
-  // }
+  Login(login: iLogin): Observable<any> {      
+    //console.log("En el servicio ", login);   
+    return this.http.post(`${this.apiUrl}/Employees/Login`, login).pipe(
+      catchError(error => {
+          console.error('Error en la solicitud:', error);
+          return throwError(error);
+      })    
+    );    
+  }
 }

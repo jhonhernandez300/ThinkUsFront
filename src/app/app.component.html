@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+<mat-card>
+    <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Idioma</mat-label>
+          <mat-select (selectionChange)="setLanguage($event)">
+            <mat-option value="es-CO">Español</mat-option>
+            <mat-option value="en-US">English</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  </mat-card>
+  
+  <mat-card class="spaced-card">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-card>

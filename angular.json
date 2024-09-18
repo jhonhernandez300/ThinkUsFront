@@ -4,6 +4,13 @@
   "newProjectRoot": "projects",
   "projects": {
     "my-app": {
+      "i18n": {
+        "sourceLocale": "es-CO",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf",
+          "pt-PT": "src/locale/messages.pt.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -22,7 +29,8 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
-          "options": {
+          "options": {            
+            "localize": ["es-CO", "en-US"],
             "outputPath": "dist/my-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
