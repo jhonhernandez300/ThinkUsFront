@@ -31,3 +31,6 @@
     width: 48%; /* Cada botón ocupa el 48% del ancho */
   }
   
+  .form-element{
+    padding-bottom: 22px;
+}

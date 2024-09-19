@@ -21,5 +21,6 @@
  "DEACTIVATED": "Desactivado",
 "LOGIN": "Loguearse",
 "SEE ALL EMPLOYEES": "Ver todos los empleados",
-"NEW EMPLOYEE": "Nuevo empleado"
+"NEW EMPLOYEE": "Nuevo empleado",
+"EMAIL REQUIRED": "Correo requerido"
 }

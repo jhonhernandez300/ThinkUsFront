@@ -1,19 +1,19 @@
-import { CanActivateChildFn, CanActivateFn } from '@angular/router';
-import { Injectable, inject } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
-import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-export const authguardGuard: CanActivateFn = (  
+export const authguardGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-) => {   
-  if(inject(EmployeeService).IsAuthenticated()){
+): boolean | UrlTree => {
+  const employeeService = inject(EmployeeService);
+  const router = inject(Router);
+  
+  if (employeeService.IsAuthenticated()) {
+    //console.log(employeeService.IsAuthenticated());
     return true;
-  }else {
-    inject(Router).navigate(['/login']);
-    return false;
+  } else {    
+    return router.createUrlTree(['/login']); 
   }
-}; 
+};

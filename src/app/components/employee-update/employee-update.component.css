@@ -17,3 +17,7 @@ min-width: 120px;
 #description{
     width: 26.5rem;
 }
+
+.form-element{
+    padding-bottom: 22px;
+}

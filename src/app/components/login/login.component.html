@@ -8,19 +8,19 @@
 
     <form [formGroup]="myForm" id="the-form" (ngSubmit)="onSubmit()">
       <div class="form-container">
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="fill" class="full-width form-element">
           <mat-label>{{ 'EMAIL' | translate }}</mat-label>
           <input matInput formControlName="Correo" placeholder="Correo">
           <mat-error *ngIf="submitted && form['Correo'].errors">
-            <div *ngIf="form['Correo']?.errors?.['required']">{{ 'REQUIRED' | translate }}</div>
-            <div *ngIf="form['Correo']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS' | translate }}</div>
+            <div *ngIf="form['Correo']?.errors?.['required']">{{ 'EMAIL REQUIRED' | translate }}</div>
+            <div *ngIf="form['Correo']?.errors?.['minlength']">{{ 'AT LEAST 8 CHARACTERS' | translate }}</div>
             <div *ngIf="form['Correo']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS' | translate }}</div>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="fill" class="full-width form-element">
           <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
-          <input matInput formControlName="Password" placeholder="Password">
+          <input matInput formControlName="Password" type="password" placeholder="Password">
           <mat-error *ngIf="submitted && form['Password'].errors">
             <div *ngIf="form['Password']?.errors?.['required']">{{ 'REQUIRED' | translate }}</div>
             <div *ngIf="form['Password']?.errors?.['minlength']">{{ 'AT LEAST 8 CHARACTERS' | translate }}</div>

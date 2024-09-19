@@ -1,101 +1,98 @@
 <div class="container">
-    <div id="second-container">
-      <mat-card id="header">
-        <mat-card-header>
-          <mat-card-title>{{ 'UPDATE EMPLOYEE' | translate }} </mat-card-title>
-        </mat-card-header>
-      </mat-card>
-  
-      <form [formGroup]="myForm" id="the-form" (ngSubmit)="onSubmit()">
+  <div id="second-container">
+    <mat-card id="header">
+      <mat-card-header>
+        <mat-card-title>{{ 'UPDATE EMPLOYEE' | translate }} </mat-card-title>
+      </mat-card-header>
+    </mat-card>
 
-        <div class="row">
-          <div class="col">
-            <mat-form-field appearance="fill">
-              <mat-label>{{ 'NAME'  | translate }} </mat-label>
-              <input matInput formControlName="employeeName" placeholder="employeeName">
-              <mat-error *ngIf="submitted && form['employeeName'].errors">
-                <div *ngIf="form['employeeName']?.errors?.['required']">{{ 'REQUIRED'  | translate }} </div>
-                <div *ngIf="form['employeeName']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }} </div>
-                <div *ngIf="form['employeeName']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }} </div>
-              </mat-error>
-            </mat-form-field>
-  
-            <mat-form-field appearance="fill">
-              <mat-label>{{ 'POSITION'  | translate }} </mat-label>
-              <input matInput formControlName="position" placeholder="position">
-              <mat-error *ngIf="submitted && form['position'].errors">
-                <div *ngIf="form['position']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
-                <div *ngIf="form['position']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }}</div>
-                <div *ngIf="form['position']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
-              </mat-error>
-            </mat-form-field>
-          </div>
-  
-          <div class="col">
-            <mat-form-field appearance="fill">
-                <mat-label>Roles</mat-label>
-                <mat-select formControlName="rolId" (selectionChange)="onRoleChange($event)">
-                  <mat-option *ngFor="let role of roles" [value]="role.id">
-                    {{ role.roleName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+    <form [formGroup]="myForm" id="the-form" (ngSubmit)="onSubmit()">
 
-              <mat-form-field appearance="fill">
-                <mat-label>{{ 'PASSWORD'  | translate }} </mat-label>
-                <input matInput formControlName="employeePassword" placeholder="Password">
-                <mat-error *ngIf="submitted && form['employeePassword'].errors">
-                  <div *ngIf="form['employeePassword']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
-                  <div *ngIf="form['employeePassword']?.errors?.['minlength']">{{ 'AT LEAST 8 CHARACTERS'  | translate }}</div>
-                  <div *ngIf="form['employeePassword']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
-                </mat-error>
-              </mat-form-field>                            
-            
-          </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="fill" class="form-element">
+            <mat-label>{{ 'NAME'  | translate }} </mat-label>
+            <input matInput formControlName="employeeName" placeholder="employeeName">
+            <mat-error *ngIf="submitted && form['employeeName'].errors">
+              <div *ngIf="form['employeeName']?.errors?.['required']">{{ 'REQUIRED'  | translate }} </div>
+              <div *ngIf="form['employeeName']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }} </div>
+              <div *ngIf="form['employeeName']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }} </div>
+            </mat-error>
+          </mat-form-field>          
 
-          <div class="col">
-            <mat-form-field appearance="fill">
-              <mat-label>{{ 'EMAIL'  | translate }}</mat-label>
-              <input matInput formControlName="email" placeholder="email">
-              <mat-error *ngIf="submitted && form['email'].errors">
-                <div *ngIf="form['email']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
-                <div *ngIf="form['email']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }}</div>
-                <div *ngIf="form['email']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
-              </mat-error>
-            </mat-form-field>  
-
-            <mat-form-field appearance="fill">
-              <mat-label>{{ 'STATE'  | translate }}</mat-label>
-              <mat-select formControlName="employeeState">
-                <mat-option [value]="true">{{ 'ACTIVATED'  | translate }}</mat-option>
-                <mat-option [value]="false">{{'DEACTIVATED'  | translate }}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="submitted && form['employeeState'].errors">
-                <div *ngIf="form['employeeState']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
-              </mat-error>
-            </mat-form-field>  
-          </div>
-
-          <div class="col">
-            <mat-form-field appearance="fill" id="description">
-              <mat-label>{{ 'DESCRIPTION'  | translate }}</mat-label>
-              <input matInput formControlName="employeeDescription" placeholder="Description">
-              <mat-error *ngIf="submitted && form['employeeDescription'].errors">
-                <div *ngIf="form['employeeDescription']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
-                <div *ngIf="form['employeeDescription']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }}</div>
-                <div *ngIf="form['employeeDescription']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
-              </mat-error>
-            </mat-form-field>  
-          </div>
-
-          <div class="col" id="buttons">
-            <button mat-raised-button color="warn" (click)="onReset()">{{ 'CLEAN'  | translate }}</button>            
-            <button mat-raised-button color="primary" type="submit">Save</button>
-          </div>
-
+          <mat-form-field appearance="fill"  class="form-element">
+            <mat-label>{{ 'POSITION'  | translate }} </mat-label>
+            <input matInput formControlName="position" placeholder="position">
+            <mat-error *ngIf="submitted && form['position'].errors">
+              <div *ngIf="form['position']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
+              <div *ngIf="form['position']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }}</div>
+              <div *ngIf="form['position']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
+            </mat-error>
+          </mat-form-field>
         </div>
-      </form>
-    </div>
-  </div>
-  
 
+        <div class="col">
+          <mat-form-field appearance="fill"  class="form-element">
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="rolId" (selectionChange)="onRoleChange($event)">
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+                {{ role.roleName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill"  class="form-element">
+            <mat-label>{{ 'PASSWORD'  | translate }} </mat-label>
+            <input matInput formControlName="employeePassword" placeholder="Password">
+            <mat-error *ngIf="submitted && form['employeePassword'].errors">
+              <div *ngIf="form['employeePassword']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
+              <div *ngIf="form['employeePassword']?.errors?.['minlength']">{{ 'AT LEAST 8 CHARACTERS'  | translate }}</div>
+              <div *ngIf="form['employeePassword']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
+            </mat-error>
+          </mat-form-field>                            
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="fill"  class="form-element">
+            <mat-label>{{ 'EMAIL'  | translate }}</mat-label>
+            <input matInput formControlName="email" placeholder="email">
+            <mat-error *ngIf="submitted && form['email'].errors">
+              <div *ngIf="form['email']?.errors?.['required']">{{ 'EMAIL REQUIRED'  | translate }}</div>
+              <div *ngIf="form['email']?.errors?.['minlength']">{{ 'AT LEAST 8 CHARACTERS'  | translate }}</div>
+              <div *ngIf="form['email']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
+            </mat-error>
+          </mat-form-field>  
+
+          <mat-form-field appearance="fill"  class="form-element">
+            <mat-label>{{ 'STATE'  | translate }}</mat-label>
+            <mat-select formControlName="employeeState">
+              <mat-option [value]="true">{{ 'ACTIVATED'  | translate }}</mat-option>
+              <mat-option [value]="false">{{'DEACTIVATED'  | translate }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="submitted && form['employeeState'].errors">
+              <div *ngIf="form['employeeState']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
+            </mat-error>
+          </mat-form-field>  
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="fill" id="description"  class="form-element">
+            <mat-label>{{ 'DESCRIPTION'  | translate }}</mat-label>
+            <input matInput formControlName="employeeDescription" placeholder="Description">
+            <mat-error *ngIf="submitted && form['employeeDescription'].errors">
+              <div *ngIf="form['employeeDescription']?.errors?.['required']">{{ 'REQUIRED'  | translate }}</div>
+              <div *ngIf="form['employeeDescription']?.errors?.['minlength']">{{ 'AT LEAST 3 CHARACTERS'  | translate }}</div>
+              <div *ngIf="form['employeeDescription']?.errors?.['maxlength']">{{ 'UP TO 30 CHARACTERS'  | translate }}</div>
+            </mat-error>
+          </mat-form-field>  
+        </div>
+
+        <div class="col" id="buttons">
+          <button mat-raised-button color="warn" (click)="onReset()">{{ 'CLEAN'  | translate }}</button>            
+          <button mat-raised-button color="primary" type="submit">Save</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

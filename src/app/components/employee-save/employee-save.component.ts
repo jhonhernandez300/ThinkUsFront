@@ -56,7 +56,7 @@ onRoleChange(event: any): void {
       Id: [0],
       EmployeeName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       Position: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      Email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/), Validators.minLength(5), Validators.maxLength(30)]],
+      Email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/), Validators.minLength(8), Validators.maxLength(30)]],
       EmployeeDescription: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       EmployeeState: [true, ],                    
       EmployeePassword: ['', [
@@ -81,7 +81,7 @@ onRoleChange(event: any): void {
     if (this.myForm.invalid) {
       //console.log('Error de validación')          
       this.dialog.open(CloseDialogComponent, {            
-        data: { message: "Form validation error" } 
+        data: { message: "Check the values of the form" } 
       });
       return
     }             
@@ -110,7 +110,7 @@ onRoleChange(event: any): void {
 
     const esValido = tieneMayuscula && tieneMinuscula && tieneNumero;
     //console.log("Contraseña esValido ", esValido);
-    return esValido ? null : { 'contrasenaInvalida': true };
+    return esValido ? null : { 'Al menos 1 mayúscula, 1 minúscula y 1 número': true };
   }
 
   get form(): { [key: string]: AbstractControl; }

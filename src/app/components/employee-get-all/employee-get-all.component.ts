@@ -61,7 +61,7 @@ export class EmployeeGetAllComponent implements OnInit {
 
   update(employee: iEmployeeRole) {
     this.employeeDataTransferService.changeEmployee(employee);
-    this.router.navigate(['/employee-update']);    
+    this.router.navigate(['/employee-update']);        
   }
 
   delete(id: number) {

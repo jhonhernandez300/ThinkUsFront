@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { SessionStorageService } from '../../services/session-storage.service';
 import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -26,15 +26,15 @@ export class LoginComponent {
     private employeeService: EmployeeService,
     private formBuilder: FormBuilder,        
     private router: Router,
-    private localStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService,
     public dialog: MatDialog
     ){      
   }
 
   iniciarFormulario(){
     this.myForm = this.formBuilder.group({                   
-      Password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      Correo: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), Validators.minLength(5), Validators.maxLength(30)]]
+      Password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(30)]],
+      Correo: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), Validators.minLength(8), Validators.maxLength(30)]]
     });
   }
 
@@ -50,7 +50,7 @@ export class LoginComponent {
 
     const esValido = tieneMayuscula && tieneMinuscula && tieneNumero;
 
-    return esValido ? null : { 'contrasenaInvalida': true };
+    return esValido ? null : { 'Al menos 1 mayúscula, 1 minúscula y 1 número': true };
   }
 
   get form(): { [key: string]: AbstractControl; }
@@ -71,13 +71,13 @@ export class LoginComponent {
     if (this.myForm.valid) {      
 
       this.employeeService.Login(this.myForm.value).subscribe(
-        (response: any) => {
-          //console.log('response en el componente ', response);
-          this.localStorageService.setData('token', response.token);
+        (response: any) => {          
+          //Acceder al token con un servicio inyectado
+          this.sessionStorageService.setToken('token', response.token);
           const currentDate = new Date();
           const dateString = currentDate.toISOString();        
-          localStorage.setItem('last date', dateString);          
-          this.router.navigate(['/employees-get-all']);
+          localStorage.setItem('last date', dateString);                    
+          this.router.navigate(['/employees-get-all']); 
         },
         (error: any) => {
           //console.error('Error:', error);
@@ -88,7 +88,7 @@ export class LoginComponent {
       );
     }else{
       this.dialog.open(CloseDialogComponent, {            
-        data: { message: "Form validation error" } 
+        data: { message: "Check the values of the form" } 
       });
     }
   }

@@ -5,16 +5,19 @@ import { iEmployeeFull } from '../interfaces/iEmployeeFull';
 import { iEmployee } from '../interfaces/iEmployee';
 import { catchError } from 'rxjs/operators';
 import { iLogin } from '../../app/interfaces/iLogin';
+import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
-  lastDate: any;  
-  fechaHoraActual: Date = new Date();  
+export class EmployeeService {  
+  private readonly TOKEN_EXPIRY_MINUTES = 20;
   private apiUrl = 'https://localhost:7261/api'; 
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private sessionStorageService: SessionStorageService
+    ) { }
 
   UpdateEmployee(employee: iEmployee): Observable<any> {    
     console.log("En el servicio ", employee);     
@@ -59,28 +62,35 @@ export class EmployeeService {
     return this.http.get(`${this.apiUrl}/Employees/ExportEmployeesToCsv`, { responseType: 'blob' });
   }
 
-  IsAuthenticated(): boolean{  
-    const lastDate = localStorage.getItem('last date');      
-    //console.log("lastDate ", lastDate);
+  IsAuthenticated(): boolean {
+    const token = this.sessionStorageService.getData('token');
 
-    if (lastDate === null) {   
-      this.lastDate = new Date(1900, 0, 1, 0, 0, 0); 
-    }else {
-      this.lastDate = new Date(lastDate);
-    }  
-  
-    const fechaHoraActual = new Date();
-    const diferenciaMs = this.lastDate.getTime() - this.fechaHoraActual.getTime(); 
-       
-      // Convertir la diferencia de milisegundos a minutos
-    const diferenciaMinutos = diferenciaMs / (1000 * 60);  
-    //console.log("(-1 * diferenciaMinutos) ", (-1 * diferenciaMinutos));
-      // Comprobar si la diferencia es mayor a 20 minutos
-    if((-1 * diferenciaMinutos) > 20)  {
-      return false;
-    }else{
-      return true;
-    }   
+    if (!token) {
+      // No hay token, no autenticado
+      return false; 
+    }
+    
+    if (this.isTokenExpired(token)) {
+      return false; 
+    }
+
+    // Token válido
+    return true; 
+  }  
+
+  private isTokenExpired(token: string): boolean {
+    try {      
+      const payload = JSON.parse(atob(token.split('.')[1])); 
+      const expiry = payload.exp; 
+      // Hora actual en segundos
+      const currentTime = Math.floor((new Date).getTime() / 1000); 
+      // Comprobar si el token ha expirado
+      return currentTime >= expiry; 
+    } catch (e) {
+      console.error("Error parsing token payload:", e);          
+      // Considerar token como expirado si no se puede parsear
+      return true; 
+    }
   }
 
   Login(login: iLogin): Observable<any> {      

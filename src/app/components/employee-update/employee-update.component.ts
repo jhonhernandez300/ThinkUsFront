@@ -77,7 +77,7 @@ export class EmployeeUpdateComponent implements OnInit {
       id: ['', [Validators.required, Validators.minLength(1)]],
       employeeName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       position: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/), Validators.minLength(5), Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/), Validators.minLength(8), Validators.maxLength(30)]],
       employeeDescription: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       employeeState: [true, ],                    
       employeePassword: ['', [
@@ -103,7 +103,7 @@ export class EmployeeUpdateComponent implements OnInit {
       //console.log('Error de validación')          
       this.dialog.open(CloseDialogComponent, {
         // Pasar el mensaje al diálogo
-       data: { message: "Form validation error" } 
+       data: { message: "Check the values of the form" } 
      });
       return
     }             
@@ -133,7 +133,7 @@ export class EmployeeUpdateComponent implements OnInit {
 
     const esValido = tieneMayuscula && tieneMinuscula && tieneNumero;
     //console.log("Contraseña esValido ", esValido);
-    return esValido ? null : { 'contrasenaInvalida': true };
+    return esValido ? null : { 'Al menos 1 mayúscula, 1 minúscula y 1 número': true };
   }
 
   get form(): { [key: string]: AbstractControl; }
