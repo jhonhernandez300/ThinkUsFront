@@ -17,13 +17,13 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './employee-get-all.component.css'
 })
 export class EmployeeGetAllComponent implements OnInit {
-  dataSource = new MatTableDataSource<iEmployeeRole>([]); // Usamos MatTableDataSource para la paginación
+  dataSource = new MatTableDataSource<iEmployeeRole>([]); 
   errorMessage: string = '';  
   showDiv = false;  
   userChoice = false;
   displayedColumns: string[] = ['employeeName', 'position', 'employeeDescription', 'employeeState', 'email', 'employeePassword', 'roleName', 'delete', 'update'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; // Referencia al paginador
+  @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
   constructor(
     private router: Router,
@@ -38,7 +38,7 @@ export class EmployeeGetAllComponent implements OnInit {
     this.loadAllEmployees();
   }
 
-  private loadAllEmployees(): void {
+  public loadAllEmployees(): void {
     this.employeeService.GetEmployees().subscribe(
       (response: any) => {
         if (response.message === "There are no employees at the moment") {
